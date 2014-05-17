@@ -1,9 +1,9 @@
 var express = require('express');
 var app = express();
 
-var mongoUri = process.env.MONGOLAB_URI ||
-    process.env.MONGOHQ_URL ||
-    'mongodb://localhost/node-login';
+// var mongoUri = process.env.MONGOLAB_URI ||
+//     process.env.MONGOHQ_URL ||
+//     'mongodb://localhost/node-login';
 
 app.set('port', process.env.PORT || 8080);
 app.set('views', __dirname + '/app/public/views');
