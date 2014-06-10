@@ -1,14 +1,28 @@
-var express = require('express');
-var app = express();
+var express  = require( 'express' ),
+    mongoose = require( 'mongoose' ),
+    passport = require( 'passport' ),
+    app = express();
 
-// var mongoUri = process.env.MONGOLAB_URI ||
-//     process.env.MONGOHQ_URL ||
-//     'mongodb://localhost/node-login';
+var mongoUri = process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL ||
+    'mongodb://localhost/dx';
+mongoose.connect(mongoUri);
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+  console.log("Connected to database: " + mongoUri);
+});
+
+// require('./app/server/backend/passport.js')(passport);
 
 app.set('port', process.env.PORT || 8080);
 app.set('views', __dirname + '/app/public/views');
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/app/public'));
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use("/rest", yarm());
 
 
 require('./app/server/router')(app);
