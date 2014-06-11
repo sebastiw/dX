@@ -7,3 +7,9 @@ block content
     input#user-signIn(type='text', name='user', placeholder='USERNAME')
     input#pass-signIn(type='password', name='pass', placeholder='PASSWORD')
     button#button-signIn(type='button') Sign in
+
+block scripts
+  script(src='/vendor/jquery.min.js')
+  script(src='/vendor/jquery.form.js')
+block customScripts
+  script(src='/javascripts/signIn.js')

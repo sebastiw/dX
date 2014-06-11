@@ -1,7 +1,10 @@
-var express  = require( 'express' ),
-    mongoose = require( 'mongoose' ),
-    passport = require( 'passport' ),
-    app = express();
+var express    = require( 'express' ),
+    session    = require( 'express-session' ),
+    cookieParser = require( 'cookie-parser' ),
+    bodyParser = require( 'body-parser' ),
+    mongoose   = require( 'mongoose' ),
+    passport   = require( 'passport' ),
+    app        = express();
 
 var mongoUri = process.env.MONGOLAB_URI ||
     process.env.MONGOHQ_URL ||
@@ -14,16 +17,20 @@ db.once('open', function callback () {
   console.log("Connected to database: " + mongoUri);
 });
 
-require('./app/server/config/passport.js')(passport);
+require( './app/server/config/passport.js' )(passport);
 
 app.set('port', process.env.PORT || 8080);
 app.set('views', __dirname + '/app/public/views');
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/app/public'));
+app.use(bodyParser());
+app.use(cookieParser());
+app.use(session( {
+  secret: 'aelska-dX'
+} ));
 app.use(passport.initialize());
 app.use(passport.session());
 // app.use("/rest", yarm());
-
 
 require( './app/server/router.js' )(app);
 

@@ -16,16 +16,21 @@ module.exports.login = function(req, res, next) {
       return;
     }
     if ( !user ) {
-      res.redirect('/');
+      res.send({ success: false });
       return;
     }
-    req.logIn(user, function(err) {
-      if ( err ) {
+    req.login(user, function(err) {
+      if (err) {
         next(err);
         return;
       }
-      res.redirect('/home');
+      res.send({ success: true });
       return;
     });
   })(req, res, next);
+};
+
+module.exports.logout = function (req, res) {
+  req.logout();
+  res.redirect('/');
 };

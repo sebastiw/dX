@@ -3,6 +3,13 @@ var mongoose  = require( 'mongoose' ),
     bcrypt    = require( 'bcrypt' ),
     validator = require( 'validator' );
 
+
+var rolelist = {
+  values: ['USER', 'ADMIN'],
+  message: "`{VALUE}` is not a valid {PATH} for a user."
+};
+var enum_role = {type: String, uppercase: true, default: 'USER', enum: rolelist};
+
 var UserSchema = new Schema( {
   username:  {type: String, validator: validator.isAlpha, lowercase: true, unique: true, index: true},
   password: {
@@ -10,7 +17,8 @@ var UserSchema = new Schema( {
     salt: String
   },
   year:      {type: Number, min: 1983},
-  lastlogin: {type: Date, validator: validator.isDate}
+  lastlogin: {type: Date, validator: validator.isDate},
+  role:      enum_role
 } );
 
 
@@ -55,20 +63,20 @@ UserSchema.statics.authenticate = function (username, password, callback) {
   this.findOne( {
     username: username
   }, function(err, user) {
-    if (err) {
+    if( err ) {
       callback(err);
       return;
     }
-    if (!user) {
+    if( !user ) {
       callback(null, false);
       return;
     }
     user.verifyPassword(password, function(err, passwordCorrect) {
-      if (err) {
+      if( err ) {
         callback(err);
         return;
       }
-      if (!passwordCorrect) {
+      if( !passwordCorrect ) {
         callback(null, false);
         return;
       }

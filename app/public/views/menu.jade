@@ -1,6 +1,6 @@
 div.menuContainer
   ul
-    -if(user.role == 'Admin')
+    -if(user && user.role == 'Admin')
       li
         a(href='/home')#admin_menuitem ADMIN
     li
