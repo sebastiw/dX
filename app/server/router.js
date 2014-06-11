@@ -1,7 +1,7 @@
 var user     = require( './controllers/view/user.js' ),
     index    = require( './controllers/view/index.js' ),
     admin    = require( './controllers/view/admin.js' ),
-    document = require( './controllers/view/document.js' ),
+//    document = require( './controllers/view/document.js' ),
     util     = require( './controllers/view-utils.js' );
 
 module.exports = function( app ) {
