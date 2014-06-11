@@ -1,0 +1,13 @@
+div.menuContainer
+  ul
+    -if(user.role == 'Admin')
+      li
+        a(href='/home')#admin_menuitem ADMIN
+    li
+      a(href='/home')#home_menuitem HOME
+    li
+      a(href='/settings')#settings_menuitem SETTINGS
+    li
+      a(href='/documents')#documents_menuitem DOCUMENTS
+    li
+      a(href='/logout')#sign-out SIGN OUT
