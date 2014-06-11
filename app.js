@@ -14,14 +14,14 @@ db.once('open', function callback () {
   console.log("Connected to database: " + mongoUri);
 });
 
-// require('./app/server/backend/passport.js')(passport);
+require('./app/server/backend/passport.js')(passport);
 
 app.set('port', process.env.PORT || 8080);
 app.set('views', __dirname + '/app/public/views');
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/app/public'));
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 // app.use("/rest", yarm());
 
 
