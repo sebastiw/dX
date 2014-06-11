@@ -1,0 +1,15 @@
+extends page
+
+block content
+  #newpost
+    textarea(id='post_textarea').
+      Post something new...
+    #postbutton
+      input(type='button', value='POST')
+  hr(width="75%",size="1px",noshade)
+  ul#posts
+  #morePostsButton
+    input(type='button', value='Load more posts')
+
+block customScripts
+  script(src='/js/views/posts.js')
