@@ -4,7 +4,7 @@ var mongoose  = require( 'mongoose' ),
     validator = require( 'validator' );
 
 var UserSchema = new Schema( {
-  username:  {type: String, validator: validator.isAlpha, lowercase: true},
+  username:  {type: String, validator: validator.isAlpha, lowercase: true, unique: true, index: true},
   password: {
     hash: String,
     salt: String

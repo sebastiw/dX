@@ -14,7 +14,7 @@ db.once('open', function callback () {
   console.log("Connected to database: " + mongoUri);
 });
 
-require('./app/server/backend/passport.js')(passport);
+require('./app/server/config/passport.js')(passport);
 
 app.set('port', process.env.PORT || 8080);
 app.set('views', __dirname + '/app/public/views');
@@ -25,7 +25,7 @@ app.use(passport.session());
 // app.use("/rest", yarm());
 
 
-require('./app/server/router')(app);
+require( './app/server/router.js' )(app);
 
 app.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
