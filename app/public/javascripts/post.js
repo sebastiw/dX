@@ -1,6 +1,4 @@
-var oldestPost,
-    loadingATM = false,
-    feedActive = false;
+var loadingATM = false;
 
 $(document).ready(function() {
   var newPosts = [],
@@ -64,6 +62,7 @@ $(document).ready(function() {
       $('#posts').append( postFromData(x) );
     } );
     $('#posts li:last').addClass('last_post');
+    setLastPost();
     newPosts = [];
     setLastPost();
     loadingATM = false;
@@ -79,27 +78,31 @@ $(document).ready(function() {
           + '<div class="post_header">'
           + '<div class="header_left"></div>'
           + '<div class="header_right"></div>'
-          + '</div></div>'
+          + '</div>'
     // Content
           + '<div class="post_content">'
           + '<p class="text_content">' + message + '</p>'
           + '</div>'
     // Footer
           + '<div class="post_footer">'
+          + '<div class="footer_left">'
           + '<p class="source_name"><a class="user_link">' + sourceUser + '</a></p>'
+          + '</div>'
+          + '<div class="footer_right">'
           + '<p class="timestamp">' + new Date(postData.eventOn).toLocaleString() + '</p>'
+          + '</div>'
           + '<hr width="75%" size="1px" noshade="">'
           + '</div></div></li>';
     return post;
   }
 
-  function setLastPost(){
+  function setLastPost() {
     $('.last_post').waypoint({
       offset: 'bottom-in-view',
-      context: '.scroll-area',
-      handler: function(direction){
-        if( !loadingATM && feedActive) {
-          if(typeof oldestPost != 'undefined') {
+//      context: '.scroll-area',
+      handler: function( direction ) {
+        if( !loadingATM ) {
+          if( typeof oldestPost != 'undefined' ) {
             loadPosts(oldestPost.eventOn);
           }
           loadingATM = true;
