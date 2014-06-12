@@ -1,7 +1,10 @@
+var oldestPost,
+    loadingATM = false,
+    feedActive = false;
+
 $(document).ready(function() {
-  var newestPost,
-      oldestPost,
-      newPosts = [];
+  var newPosts = [],
+      newestPost;
 
   $('#postbutton').click(function() {
     postNewPost();
@@ -22,16 +25,23 @@ $(document).ready(function() {
       dataType: 'json',
       data: {
         nof: 5,
-        fe:  fromDate !== undefined ? fromDate : new Date()
+        fe:  fromDate
       },
       success: function(data) {
         newestPost = data[0];
-        oldestPost = data[data.length-1];
-        newPosts = data;
-        appendPosts();
+        handleNewPosts(data);
       }
     } );
   }
+
+  function handleNewPosts(data) {
+    data.forEach(function (x,idx) {
+      newPosts.push(x);
+    } );
+    oldestPost = newPosts[newPosts.length-1];
+    appendPosts();
+  }
+
   function postNewPost() {
     jQuery.ajax( {
       url: "/rest/post/newpost",
@@ -42,6 +52,7 @@ $(document).ready(function() {
         message: $('#post_textarea').val()
       },
       success: function() {
+        // Delay here is needed!?
         $('#post_textarea').val("Post something new...");
         loadPosts();
       }
@@ -54,6 +65,8 @@ $(document).ready(function() {
     } );
     $('#posts li:last').addClass('last_post');
     newPosts = [];
+    setLastPost();
+    loadingATM = false;
   }
 
   function postFromData(postData) {
@@ -64,20 +77,37 @@ $(document).ready(function() {
           + '<div class="post" id="' + postData._id + '">'
     // Header
           + '<div class="post_header">'
-          + '<div class="header_left">'
-          + '<p class="source_name"><a class="user_link">' + sourceUser + '</a></p>'
-          + '</div>'
-          + '<div class="header_right">'
-          + '<p class="timestamp">' + new Date(postData.eventOn).toLocaleString() + '</p>'
-          + '</div></div></div>'
-          + '<hr width="75%" size="1px" noshade="">'
+          + '<div class="header_left"></div>'
+          + '<div class="header_right"></div>'
+          + '</div></div>'
     // Content
           + '<div class="post_content">'
           + '<p class="text_content">' + message + '</p>'
           + '</div>'
     // Footer
           + '<div class="post_footer">'
+          + '<p class="source_name"><a class="user_link">' + sourceUser + '</a></p>'
+          + '<p class="timestamp">' + new Date(postData.eventOn).toLocaleString() + '</p>'
+          + '<hr width="75%" size="1px" noshade="">'
           + '</div></div></li>';
     return post;
   }
+
+  function setLastPost(){
+    $('.last_post').waypoint({
+      offset: 'bottom-in-view',
+      context: '.scroll-area',
+      handler: function(direction){
+        if( !loadingATM && feedActive) {
+          if(typeof oldestPost != 'undefined') {
+            loadPosts(oldestPost.eventOn);
+          }
+          loadingATM = true;
+        }
+      }
+    });
+  }
 } );
+function setFeedLoadingActive(modifier){
+  feedActive  = modifier;
+}

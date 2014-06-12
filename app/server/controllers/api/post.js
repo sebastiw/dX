@@ -9,9 +9,11 @@ module.exports.getPosts = function (req, callback) {
 
 module.exports.newPost = function (req, callback) {
   var post = new Post( {
-    poster: req.user._id,
+    poster: req.user.username,
     message: req.param("message")
   } );
-  console.log("poster: " + req.user._id + "\nmessage: " + req.param("message"));
-  post.save(callback);
+
+  post.save(function(err, post) {
+    callback(err, post);
+  } );
 };

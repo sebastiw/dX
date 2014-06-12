@@ -16,11 +16,10 @@ var UserSchema = new Schema( {
     hash: String,
     salt: String
   },
-  year:      {type: Number, min: 1983},
+  year:      {type: Number, min: 1982, default: 1982},
   lastlogin: {type: Date, validator: validator.isDate},
   role:      enum_role
 } );
-
 
 /**
  * Changes the password for a user

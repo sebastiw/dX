@@ -1,10 +1,9 @@
 var mongoose  = require( 'mongoose' ),
     validator = require( 'validator' ),
-    su        = require( './schema_util.js' ),
     Schema    = mongoose.Schema;
 
 var PostSchema = new Schema( {
-  poster:      su.ref( 'User' ),
+  poster:      {type: String, validator: validator.isAlpha, lowercase: true},
   eventOn:     {type: Date, default: Date.now, validator: validator.isDate},
   message:     {type: String}
 } );
@@ -21,7 +20,6 @@ var PostSchema = new Schema( {
 PostSchema.statics.getPosts = function(numberOfPosts,
                                        fromEvent,
                                        callback) {
-  console.log("getPosts - " + numberOfPosts +" - " + fromEvent);
   if( !(fromEvent instanceof Date) || isNaN(fromEvent.valueOf()) ) {
     fromEvent = new Date();
   }
