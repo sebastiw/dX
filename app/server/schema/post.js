@@ -18,29 +18,21 @@ var PostSchema = new Schema( {
  * @param {Ref[]} who
  * @param {fn} callback
  */
-PostSchema.statics.getFeeds = function(numberOfPosts,
+PostSchema.statics.getPosts = function(numberOfPosts,
                                        fromEvent,
-                                       who,
                                        callback) {
-  if( !(fromEvent instanceof Date) || isNaN(fromEvent.valueOf()) )
-  {
+  console.log("getPosts - " + numberOfPosts +" - " + fromEvent);
+  if( !(fromEvent instanceof Date) || isNaN(fromEvent.valueOf()) ) {
     fromEvent = new Date();
   }
-  if( typeof numberOfPosts != 'number' || numberOfPosts < 1 )
-  {
+  if( typeof numberOfPosts != 'number' || numberOfPosts < 1 ) {
     numberOfPosts = 5;
   }
-  if( who instanceof Array )
-  {
-    this.find({
-      eventOn: {$lt: fromEvent},
-      poster: {$in: who}
-    }).sort({
-      eventOn: 'descending'
-    }).limit( numberOfPosts ).exec( callback );
-  } else {
-    callback(null);
-  }
+  this.find( {
+    eventOn: {$lt: fromEvent}
+  } ).sort( {
+    eventOn: 'descending'
+  } ).limit( numberOfPosts ).exec( callback );
 };
 
 var Post = module.exports = mongoose.model( 'Post', PostSchema );

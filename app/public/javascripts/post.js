@@ -49,7 +49,7 @@ $(document).ready(function() {
   }
 
   function appendPosts() {
-    newPosts.foreach(function (x, idx) {
+    newPosts.forEach(function (x, idx) {
       $('#posts').append( postFromData(x) );
     } );
     $('#posts li:last').addClass('last_post');
@@ -57,7 +57,7 @@ $(document).ready(function() {
   }
 
   function postFromData(postData) {
-    var sourceUser = USER.getUser(postData.poster),
+    var sourceUser = postData.poster, // USER.getUser(postData.poster),
         message = postData.message,
         post
           = '<li class="m-feed-item">'
@@ -68,12 +68,12 @@ $(document).ready(function() {
           + '<p class="source_name"><a class="user_link">' + sourceUser + '</a></p>'
           + '</div>'
           + '<div class="header_right">'
-          + '<p class="timestamp">' + new Date(postData.updatedAt).toLocaleString() + '</p>'
+          + '<p class="timestamp">' + new Date(postData.eventOn).toLocaleString() + '</p>'
           + '</div></div></div>'
           + '<hr width="75%" size="1px" noshade="">'
     // Content
           + '<div class="post_content">'
-          + '<p class="text_content">' + postData.message + '</p>'
+          + '<p class="text_content">' + message + '</p>'
           + '</div>'
     // Footer
           + '<div class="post_footer">'
