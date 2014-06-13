@@ -1,4 +1,7 @@
-var loadingATM = false;
+var loadingATM = false,
+    feedActive = false,
+    oldestPost,
+    numberOfPosts = 5;
 
 $(document).ready(function() {
   var newPosts = [],
@@ -9,31 +12,52 @@ $(document).ready(function() {
   } );
   $('#morePostsButton').click(function() {
     if(typeof oldestPost != 'undefined') {
-      loadPosts(oldestPost.eventOn);
+      loadPostsFromDate(oldestPost.eventOn);
     }
   } );
 
   //LOAD POSTS
   loadPosts();
-  function loadPosts(fromDate) {
+  function loadPosts() {
     $('#posts').empty();
     jQuery.ajax( {
       url: "/rest/posts",
       type: "GET",
       dataType: 'json',
       data: {
-        nof: 5,
-        fe:  fromDate
+        nof: numberOfPosts
       },
       success: function(data) {
         newestPost = data[0];
+        // if( data.length < numberOfPosts ) {
+        //   setFeedLoadingActive(false);
+        // }
+        handleNewPosts(data);
+      }
+    } );
+  }
+
+  function loadPostsFromDate(fromDate) {
+    $('#posts').empty();
+    jQuery.ajax( {
+      url: "/rest/posts",
+      type: "GET",
+      dataType: 'json',
+      data: {
+        nof: numberOfPosts,
+        fe:  fromDate
+      },
+      success: function(data) {
+        if( data.length < numberOfPosts ) {
+          setFeedLoadingActive(false);
+        }
         handleNewPosts(data);
       }
     } );
   }
 
   function handleNewPosts(data) {
-    data.forEach(function (x,idx) {
+    data.forEach(function (x, idx) {
       newPosts.push(x);
     } );
     oldestPost = newPosts[newPosts.length-1];
@@ -58,11 +82,10 @@ $(document).ready(function() {
   }
 
   function appendPosts() {
-    newPosts.forEach(function (x, idx) {
-      $('#posts').append( postFromData(x) );
-    } );
+    for(var i = 0; i < newPosts.length; i++) {
+      $('#posts').append( postFromData(newPosts[i]) );
+    }
     $('#posts li:last').addClass('last_post');
-    setLastPost();
     newPosts = [];
     setLastPost();
     loadingATM = false;
@@ -95,22 +118,19 @@ $(document).ready(function() {
           + '</div></div></li>';
     return post;
   }
-
   function setLastPost() {
-    $('.last_post').waypoint({
+    $('.last_post').waypoint( {
       offset: 'bottom-in-view',
-//      context: '.scroll-area',
-      handler: function( direction ) {
+      container: '#post',
+      handler: function (direction) {
         if( !loadingATM ) {
-          if( typeof oldestPost != 'undefined' ) {
-            loadPosts(oldestPost.eventOn);
-          }
-          loadingATM = true;
+          loadPostsFromDate(oldestPost.eventOn);
         }
       }
-    });
+    } );
   }
 } );
-function setFeedLoadingActive(modifier){
-  feedActive  = modifier;
+
+function setFeedLoadingActive(modifier) {
+  feedActive = modifier;
 }
