@@ -85,6 +85,7 @@ $(document).ready(function() {
     for(var i = 0; i < newPosts.length; i++) {
       $('#posts').append( postFromData(newPosts[i]) );
     }
+    $('.last_post').removeClass('last_post');
     $('#posts li:last').addClass('last_post');
     newPosts = [];
     setLastPost();
