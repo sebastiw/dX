@@ -124,7 +124,7 @@ $(document).ready(function() {
       offset: 'bottom-in-view',
       container: '#post',
       handler: function (direction) {
-        if( !loadingATM ) {
+        if( !loadingATM && feedActive ) {
           loadPostsFromDate(oldestPost.eventOn);
         }
       }
