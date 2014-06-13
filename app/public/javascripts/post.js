@@ -29,9 +29,9 @@ $(document).ready(function() {
       },
       success: function(data) {
         newestPost = data[0];
-        // if( data.length < numberOfPosts ) {
-        //   setFeedLoadingActive(false);
-        // }
+        if( data.length < numberOfPosts ) {
+          setFeedLoadingActive(false);
+        }
         handleNewPosts(data);
       }
     } );
