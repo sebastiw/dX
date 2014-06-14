@@ -1,53 +1,35 @@
 var loadingATM = false,
     feedActive = false,
+    newPosts = [],
+    newestPost,
     oldestPost,
     numberOfPosts = 5;
 
 $(document).ready(function() {
-  var newPosts = [],
-      newestPost;
-
   $('#postbutton').click(function() {
     postNewPost();
   } );
   $('#morePostsButton').click(function() {
     if(typeof oldestPost != 'undefined') {
-      loadPostsFromDate(oldestPost.eventOn);
+      loadPosts(oldestPost.eventOn);
     }
   } );
 
   //LOAD POSTS
   loadPosts();
-  function loadPosts() {
-    $('#posts').empty();
-    jQuery.ajax( {
-      url: "/rest/posts",
-      type: "GET",
-      dataType: 'json',
-      data: {
-        nof: numberOfPosts
-      },
-      success: function(data) {
-        newestPost = data[0];
-        if( data.length < numberOfPosts ) {
-          setFeedLoadingActive(false);
-        }
-        handleNewPosts(data);
-      }
-    } );
-  }
-
-  function loadPostsFromDate(fromDate) {
-    $('#posts').empty();
+  function loadPosts(fromDate) {
     jQuery.ajax( {
       url: "/rest/posts",
       type: "GET",
       dataType: 'json',
       data: {
         nof: numberOfPosts,
-        fe:  fromDate
+        fe: fromDate
       },
       success: function(data) {
+        if( !newestPost ) {
+          newestPost = data[0];
+        }
         if( data.length < numberOfPosts ) {
           setFeedLoadingActive(false);
         }
@@ -125,7 +107,7 @@ $(document).ready(function() {
       container: '#post',
       handler: function (direction) {
         if( !loadingATM && feedActive ) {
-          loadPostsFromDate(oldestPost.eventOn);
+          loadPosts(oldestPost.eventOn);
         }
       }
     } );
