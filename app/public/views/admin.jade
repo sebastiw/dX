@@ -1,0 +1,24 @@
+extends page
+
+block content
+  section
+    ul#members
+    hr(width="75%", size="1px", noshade)
+  footer
+    input(type='text', value='Nickname', id='newmembername')
+    input(type='text', value='Email', id='newmembermail')
+    input(value='Position', id='newmemberposition', list='positions')
+    datalist#positions
+      option(value='Ordförande')
+      option(value='Kassör')
+      option(value='PR-chef')
+      option(value='Mat-chef')
+      option(value='Öl-chef')
+      option(value='IT-tempelriddare')
+      option(value='Övrigt')
+    select#newmemberyear
+    #addmemberbutton
+      input(type='button' value='Add')
+
+block customScripts
+  script(src='/javascripts/admin.js')

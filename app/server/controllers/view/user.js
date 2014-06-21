@@ -34,3 +34,7 @@ module.exports.logout = function (req, res) {
   req.logout();
   res.redirect('/');
 };
+
+module.exports.settings = function (req, res) {
+  res.render('settings');
+};

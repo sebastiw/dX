@@ -16,6 +16,8 @@ var UserSchema = new Schema( {
     hash: String,
     salt: String
   },
+  email:     {type: String, validator: validator.isEmail, lowercase: true, unique: true, sparse: true},
+  position:  {type: String, validator: validator.isAlphanumeric},
   year:      {type: Number, min: 1982, default: 1982},
   lastlogin: {type: Date, validator: validator.isDate},
   role:      enum_role
@@ -42,6 +44,24 @@ UserSchema.methods.setPassword = function (password, callback) {
     });
   });
 };
+
+/**
+ * Generates a random password
+ * @param {Number} length
+ * @return {String}
+ */
+function randomPassword(length) {
+  var chars
+        = "abcdefghijklmnopqrstuvwxyz"
+        + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        + "1234567890",
+      pass = "";
+  for(var x = 0; x < length; x++)
+  {
+    pass += chars.charAt(Math.floor(Math.random() * 62));
+  }
+  return pass;
+}
 
 /**
  * Verifies a users password
@@ -89,5 +109,15 @@ UserSchema.statics.authenticate = function (username, password, callback) {
   });
 };
 
+UserSchema.statics.resetPassword = function (callback) {
+  var generatedPassword = randomPassword(10);
+  this.setPassword(generatedPassword, function (err, user) {
+    if( err ) {
+      callback( err );
+      return;
+    }
+    user.save( callback );
+  } );
+};
 
 var User = module.exports = mongoose.model( 'User', UserSchema );
