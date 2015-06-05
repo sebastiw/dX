@@ -1,2 +1,5 @@
 node_modules
 data/
+.bower-cache
+.bower-registry
+bower_components

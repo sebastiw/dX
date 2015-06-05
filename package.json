@@ -14,7 +14,7 @@
     "passport"      : "~0.2.0",
     "passport-local": "1.0.0",
     "bcrypt"        : "~0.7.8",
-    "mongodb"       : "latest",
+    "mongodb"       : "~1.4.0",
     "yarm"          : "~0.3.7"
   },
   "engines": {
