@@ -22,11 +22,17 @@ npm install
 
 Starta projektet
 ```sh
-node server
+node app
 ```
 
 Om inga problem uppstår så är det bara att surfa in på
 ```
-http://localhost:3000/
+http://localhost:8080/
 ```
 
+För ett inlogg:
+```sh
+mongo
+> use dx
+> db.users.insert({ "username" : "seba", "password" : { "hash" : "$2a$10$5vsHE28BbBzdg2QBDb3Zt.34MQqhp3iQV0UQOXc4fJlKjswmRiQYi", "salt" : "" }, role:'ADMIN' })
+```
