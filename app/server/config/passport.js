@@ -1,5 +1,5 @@
 var mongoose       = require( 'mongoose' ),
-    GoogleStrategy = require( 'passport-google-oauth' ).OAuthStrategy,
+    GoogleStrategy = require( 'passport-google-oauth' ).OAuth2Strategy,
     LocalStrategy  = require( 'passport-local' ).Strategy,
     User           = require( '../schema/user.js' );
 
@@ -19,13 +19,15 @@ module.exports = function (passport) {
             });
         });
 
+    var server = require('os').hostname();
+    console.log("hostname: " + server);
+
     passport.use(new GoogleStrategy(
         {
-            returnURL: 'http://dx-chalmers.heroku.com/auth/google/return',
-            realm: 'http://dx-chalmers.heroku.com/',
-            consumerKey: "967532746305-7c8devbp3egrldmb7as33nnhb2eadbjj.apps.googleusercontent.com",
-            consumerSecret: "xhVjrvHYOr_GVMREqoqUjZ1t",
-            callbackURL: "http://127.0.0.1:3000/auth/google/return"
+            clientID: "967532746305-7c8devbp3egrldmb7as33nnhb2eadbjj.apps.googleusercontent.com",
+            clientSecret: "xhVjrvHYOr_GVMREqoqUjZ1t",
+            callbackURL: "http://dx-chalmers.herokuapp.com/auth/google/return"
+//            callbackURL: "http://127.0.0.1:8080/auth/google/return"
         },
         function(token, tokenSecret, profile, done) {
             User.findOrCreate({ googleId: profile.id }, function (err, user) {
