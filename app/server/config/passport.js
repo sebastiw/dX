@@ -21,13 +21,16 @@ module.exports = function (passport) {
             });
         });
 
-    var server = require('os').hostname();
-    console.log("hostname: " + server);
+    var hostname = require('os').hostname(),
+        port = process.env.PORT || 8080,
+        fullPort = (!port && "") || ":" + port;
+
+    console.log("hostname+port: " + hostname + ":" + port);
     passport.use(new FacebookStrategy(
         {
             clientID: "1625508111055508",
             clientSecret: "dbf49fb5534d645c0bfc818462cde9e3",
-            callbackURL: "http://localhost:8080/auth/facebook/return",
+            callbackURL: "http://"+hostname+fullPort+"/auth/facebook/return",
             enableProof: false
         },
         function(accessToken, refreshToken, profile, done) {
@@ -47,7 +50,7 @@ module.exports = function (passport) {
             clientID: "13c896b9bdb34fcd8e7746ca7068cd21",
             clientSecret: "e2ece85fd544471082dd4d69bdf38b7c",
 //            callbackURL: "http://dx-chalmers.herokuapp.com/auth/spotify/return"
-            callbackURL: "http://localhost:8080/auth/spotify/return"
+            callbackURL: "http://"+hostname+fullPort+"/auth/spotify/return"
         },
         function(accessToken, refreshToken, profile, done) {
             console.log("Returned ok from Spotify with profile " + profile.id);
@@ -67,7 +70,7 @@ module.exports = function (passport) {
             clientID: "967532746305-7c8devbp3egrldmb7as33nnhb2eadbjj.apps.googleusercontent.com",
             clientSecret: "xhVjrvHYOr_GVMREqoqUjZ1t",
 //            callbackURL: "http://dx-chalmers.herokuapp.com/auth/google/return"
-            callbackURL: "http://localhost:8080/auth/google/return"
+            callbackURL: "http://"+hostname+fullPort+"/auth/google/return"
         },
         function(token, tokenSecret, profile, done) {
             console.log("Returned ok from Google with profile " + profile.id);
