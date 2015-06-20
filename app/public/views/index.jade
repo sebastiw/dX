@@ -3,10 +3,11 @@ extends head
 block content
   #background
     .loginContainer
-    form(method="post")#signInForm
-    input#user-signIn(type='text', name='user', placeholder='USERNAME')
-    input#pass-signIn(type='password', name='pass', placeholder='PASSWORD')
-    button#button-signIn(type='button') Sign in
+      form(method="post")#signInForm
+        input#user-signIn(type='text', name='user', placeholder='USERNAME')
+        input#pass-signIn(type='password', name='pass', placeholder='PASSWORD')
+        button#button-signIn(type='button') Sign in
+      a(href="/auth/google") Sign In with Google
 
 block scripts
   script(src='/vendor/jquery.min.js')

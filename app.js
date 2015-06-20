@@ -33,7 +33,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use("/rest", yarm());
 
-require( './app/server/router.js' )(app);
+require( './app/server/router.js' )(app, passport);
 require( './app/server/yarm.js' );
 
 app.listen(app.get('port'), function(){

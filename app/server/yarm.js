@@ -8,14 +8,14 @@ var yarm   = require( 'yarm' ),
 //   .hook(utils.isAuthenticated).get( user.getUser );
 
 yarm.resource("posts")
-  .hook( utils.isAuthenticated ).get( post.getPosts );
+    .hook( utils.isAuthenticated ).get( post.getPosts );
 yarm.resource("post/newpost")
-  .hook( utils.isAuthenticated ).post( post.newPost );
+    .hook( utils.isAuthenticated ).post( post.newPost );
 
 yarm.resource("members")
-  .hook( utils.isAuthenticated ).get( user.getMembers );
+    .hook( utils.isAuthenticated ).get( user.getMembers );
 yarm.resource("member/add")
-  .hook( utils.isAuthenticated ).post( user.newMember );
+    .hook( utils.isAuthenticated ).post( user.newMember );
 
 yarm.resource("user/changepassword")
-  .hook( utils.isAuthenticated ).post( user.changePassword );
+    .hook( utils.isAuthenticated ).post( user.changePassword );
