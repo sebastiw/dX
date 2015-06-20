@@ -21,7 +21,7 @@ module.exports = function (passport) {
             });
         });
 
-    var hostname = "dx-sidan.herokuapp.com", // set to localhost on local
+    var hostname = "dx-chalmers.herokuapp.com", // set to localhost on local
         port = (hostname == "localhost" && 8080), // only used on localhost
         fullPort = (port ? ":" + port : "");
 
