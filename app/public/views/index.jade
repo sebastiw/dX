@@ -7,7 +7,13 @@ block content
         input#user-signIn(type='text', name='user', placeholder='USERNAME')
         input#pass-signIn(type='password', name='pass', placeholder='PASSWORD')
         button#button-signIn(type='button') Sign in
-      a(href="/auth/google") Sign In with Google
+      ul
+        li
+          a(href="/auth/google") Sign In with Google
+        li
+          a(href="/auth/spotify") Sign In with Spotify
+        li
+          a(href="/auth/facebook") Sign In with Facebook
 
 block scripts
   script(src='/vendor/jquery.min.js')

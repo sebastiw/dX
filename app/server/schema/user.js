@@ -12,6 +12,9 @@ var enum_role = {type: String, uppercase: true, default: 'USER', enum: rolelist}
 
 var UserSchema = new Schema( {
     username:  {type: String, validator: validator.isAlpha, lowercase: true, unique: true, index: true},
+    spotifyId: {type: String},
+    googleId: {type: String},
+    facebookId: {type: String},
     password: {
         hash: String,
         salt: String

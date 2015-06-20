@@ -8,17 +8,36 @@ module.exports = function( app, passport ) {
     app.get('/',                                    user.attemptlogin);
     app.post('/',                                   user.login);
 
-    // Redirect the user to Google for authentication.  When complete, Google
-    // will redirect the user back to the application at
-    //     /auth/google/return
+    // GOOGLE
     app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
-
-    // Google will redirect the user to this URL after authentication.  Finish
-    // the process by verifying the assertion.  If valid, the user will be
-    // logged in.  Otherwise, authentication has failed.
     app.get('/auth/google/return',
             passport.authenticate('google', { successRedirect: '/home',
-                                              failureRedirect: '/login' }));
+                                              failureRedirect: '/logout' }));
+
+    // SPOTIFY
+    app.get('/auth/spotify',
+            passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'] }),
+            function(req, res){
+                // The request will be redirected to spotify for authentication, so this
+                // function will not be called.
+            });
+
+    app.get('/auth/spotify/return',
+            passport.authenticate('spotify', { failureRedirect: '/logout' }),
+            function(req, res) {
+                // Successful authentication, redirect home.
+                res.redirect('/');
+            });
+
+    // FACEBOOK
+    app.get('/auth/facebook',
+            passport.authenticate('facebook'));
+    app.get('/auth/facebook/return',
+            passport.authenticate('facebook', { failureRedirect: '/logout' }),
+            function(req, res) {
+                // Successful authentication, redirect home.
+                res.redirect('/');
+            });
 
     app.get('/home',      util.ensureAuthenticated, index.home);
     app.get('/logout',    util.ensureAuthenticated, user.logout);
