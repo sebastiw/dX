@@ -23,9 +23,9 @@ module.exports = function (passport) {
 
     var hostname = "dx-sidan.herokuapp.com", // set to localhost on local
         port = (hostname == "localhost" && 8080), // only used on localhost
-        fullPort = (!port && "") || ":" + port;
+        fullPort = (port ? ":" + port : "");
 
-    console.log("hostname+port: " + hostname + ":" + port);
+    console.log("hostname+port: " + hostname + fullPort);
     passport.use(new FacebookStrategy(
         {
             clientID: "1625508111055508",
