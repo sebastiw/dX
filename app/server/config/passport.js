@@ -21,7 +21,7 @@ module.exports = function (passport) {
             });
         });
 
-    var hostname = "dx-chalmers.herokuapp.com", // set to localhost on local
+    var hostname = "localhost", // set to localhost on local
         port = (hostname == "localhost" && 8080), // only used on localhost
         fullPort = (port ? ":" + port : "");
 
@@ -70,7 +70,7 @@ module.exports = function (passport) {
             clientID: "967532746305-7c8devbp3egrldmb7as33nnhb2eadbjj.apps.googleusercontent.com",
             clientSecret: "xhVjrvHYOr_GVMREqoqUjZ1t",
 //            callbackURL: "http://dx-chalmers.herokuapp.com/auth/google/return"
-            callbackURL: "http://"+hostname+fullPort+"/auth/google/return"
+            callbackURL: "http://localhost:8080/auth/google/return"
         },
         function(token, tokenSecret, profile, done) {
             console.log("Returned ok from Google with profile " + profile.id);

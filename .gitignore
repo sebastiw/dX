@@ -3,3 +3,6 @@ data/
 .bower-cache
 .bower-registry
 bower_components
+*.js~
+*.jade~
+*.css~

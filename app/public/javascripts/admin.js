@@ -32,7 +32,7 @@ $(document).ready(function() {
 
   function handleMember(data) {
     var name = data.username,
-        mail = data.mail,
+        mail = data.email,
         year = data.year,
         post = data.position,
         last = data.lastlogin,
