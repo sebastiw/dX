@@ -3,11 +3,11 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    block scripts
+    block customScripts
   body
     .snap-drawers
       block menu
     div.snap-content
       main
         block content
-  block scripts
-  block customScripts

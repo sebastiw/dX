@@ -1,11 +1,48 @@
 extends page
 
 block content
-  section.m-content-section.m-feed.grid
-     include postpanel
+  script.
+    function postFromData(postData) {
+      var id = postData._id;
+      var message = postData.message;
+      var sourceUser = postData.poster; // USER.getUser(postData.poster),
+      var eventOn = new Date(postData.eventOn).toLocaleString();
+      var post
+            = '<li class="m-feed-item">'
+            + '<div class="post" id="' + id + '">'
+      // Header
+            + '<div class="post_header">'
+            + '<div class="header_left"></div>'
+            + '<div class="header_right"></div>'
+            + '</div>'
+      // Content
+            + '<div class="post_content">'
+            + '<p class="text_content">' + message + '</p>'
+            + '</div>'
+      // Footer
+            + '<div class="post_footer">'
+            + '<div class="footer_left">'
+            + '<p class="source_name"><a class="user_link">' + sourceUser + '</a></p>'
+            + '</div>'
+            + '<div class="footer_right">'
+            + '<p class="timestamp">' + eventOn + '</p>'
+            + '</div>'
+            + '</div></div></li>';
+        return post;
+    }
+  section
      .container
-         p test
-        
+       input(type="button" value="Skriv")#showWritePost
+       include postpanel
+       ul#posts
+       input(type='button', value='Load more posts')#morePostsButton
+
+//       - for (var i=0; i<20; i++)
+//         - var author = "Seba"
+//         - var date = "2016-01-09 16:00"
+//         - var position = "X.Y"
+//         include a_post_message
+
 
 block customScripts
   script(src='/vendor/waypoints.min.js')

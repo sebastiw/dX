@@ -1,10 +1,4 @@
-.postcontainer
-      #newpost
-        textarea(id='post_textarea').
-          Post something new...
-        #postbutton
-          input(type='button', value='POST')
-      hr(width="75%", size="1px", noshade)
-      ul#posts
-      #morePostsButton
-        input(type='button', value='Load more posts')
+div(title="Skriv inlägg")#writePost-modal
+  textarea#post_textarea.
+    Post something new...
+  input(type='button', value='Posta')#post_button

@@ -6,14 +6,25 @@ var loadingATM = false,
     numberOfPosts = 5;
 
 $(document).ready(function() {
-  $('#postbutton').click(function() {
-    postNewPost();
-  } );
-  $('#morePostsButton').click(function() {
-    if(typeof oldestPost != 'undefined') {
-      loadPosts(oldestPost.eventOn);
-    }
-  } );
+    $("#writePost-modal").dialog( {
+        autoOpen: false,
+        modal: true,
+        show: "blind",
+        hide: "blind"
+    });
+
+    $('#showWritePost').click(function () {
+        $( "#writePost-modal" ).dialog( "open" );
+    } );
+    $('#post_button').click(function() {
+        postNewPost();
+    } );
+    $('#morePostsButton').click(function() {
+        if(typeof oldestPost != 'undefined') {
+            loadPosts(oldestPost.eventOn);
+        }
+    } );
+
 
   //LOAD POSTS
   loadPosts();
@@ -65,6 +76,7 @@ $(document).ready(function() {
 
   function appendPosts() {
     for(var i = 0; i < newPosts.length; i++) {
+      /* postFromData in jade */
       $('#posts').append( postFromData(newPosts[i]) );
     }
     $('.last_post').removeClass('last_post');
@@ -74,33 +86,6 @@ $(document).ready(function() {
     loadingATM = false;
   }
 
-  function postFromData(postData) {
-    var sourceUser = postData.poster, // USER.getUser(postData.poster),
-        message = postData.message,
-        post
-          = '<li class="m-feed-item">'
-          + '<div class="post" id="' + postData._id + '">'
-    // Header
-          + '<div class="post_header">'
-          + '<div class="header_left"></div>'
-          + '<div class="header_right"></div>'
-          + '</div>'
-    // Content
-          + '<div class="post_content">'
-          + '<p class="text_content">' + message + '</p>'
-          + '</div>'
-    // Footer
-          + '<div class="post_footer">'
-          + '<div class="footer_left">'
-          + '<p class="source_name"><a class="user_link">' + sourceUser + '</a></p>'
-          + '</div>'
-          + '<div class="footer_right">'
-          + '<p class="timestamp">' + new Date(postData.eventOn).toLocaleString() + '</p>'
-          + '</div>'
-          + '<hr width="75%" size="1px" noshade="">'
-          + '</div></div></li>';
-    return post;
-  }
   function setLastPost() {
     $('.last_post').waypoint( {
       offset: 'bottom-in-view',
