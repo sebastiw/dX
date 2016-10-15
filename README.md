@@ -37,3 +37,15 @@ mongo
 > > db.users.insert({ "username" : "seba", "password" : { "hash" : "$2a$08$IFKG/YI7A4nRxPbL0T17y.XtfpnyyYEy.zO75VHc8wxpENMRHWm5S", "salt" : "" }, role:'ADMIN' })
 ```
 Lösenordet här är "123" och är genererat från bcrypt.
+
+
+# Heroku
+
+Dubbelkolla att `ruby` är installerat och hämta heroku-toolbelt.
+
+```sh
+dpkg -l ruby
+wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+```
+
+därefter kan man använda kommandot `heroku` för olika saker.
