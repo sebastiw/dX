@@ -16,7 +16,7 @@
       "passport-google-oauth": "~0.2.0",
       "passport-spotify": "~0.3.0",
       "passport-facebook": "~2.0.0",
-      "bcrypt"        : "~0.7.8",
+      "bcrypt"        : "~0.8.7",
       "mongodb"       : "~1.4.0",
       "yarm"          : "~0.3.7"
   },
