@@ -34,5 +34,6 @@ För ett inlogg:
 ```sh
 mongo
 > use dx
-> db.users.insert({ "username" : "seba", "password" : { "hash" : "$2a$10$5vsHE28BbBzdg2QBDb3Zt.34MQqhp3iQV0UQOXc4fJlKjswmRiQYi", "salt" : "" }, role:'ADMIN' })
+> > db.users.insert({ "username" : "seba", "password" : { "hash" : "$2a$08$IFKG/YI7A4nRxPbL0T17y.XtfpnyyYEy.zO75VHc8wxpENMRHWm5S", "salt" : "" }, role:'ADMIN' })
 ```
+Lösenordet här är "123" och är genererat från bcrypt.
