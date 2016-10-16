@@ -3,6 +3,7 @@ var mongoose  = require( 'mongoose' ),
     bcrypt    = require( 'bcrypt' ),
     validator = require( 'validator' );
 
+mongoose.Promise = global.Promise;
 
 var rolelist = {
     values: ['USER', 'ADMIN'],
